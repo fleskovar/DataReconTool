@@ -9,7 +9,6 @@
            v-on:open='OpenFile'
            app
            />
-           
         </div>
 
         <router-view class="main"></router-view>        
@@ -119,7 +118,10 @@ html{
 }
 
 .main {    
-    grid-row: 2;    
+    grid-row: 2;   
+    height: 100%;
+    width: 100%;
+    overflow: hidden; 
 }
 
 

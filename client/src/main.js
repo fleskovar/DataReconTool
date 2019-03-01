@@ -7,19 +7,29 @@ import App from './App.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft,
+		 faArrowRight,
+		 faSearchMinus,
+		 faSearchPlus,
+		 faCaretLeft,
+		 faCaretRight,
+		 faPlus } from '@fortawesome/free-solid-svg-icons'
 import {Canvas} from  '../src/js/Canvas'
 import router from './router'
 
 
-Vue.component('font-awesome-icon', FontAwesomeIcon) // Register component globally
-library.add(fas) // Include needed icons.
+Vue.component('font-awesome-icon', FontAwesomeIcon); // Register component globally
+library.add(fas);// Include needed icons.
+library.add( faArrowLeft,
+			 faArrowRight,
+			 faSearchMinus,
+			 faSearchPlus,
+			 faCaretLeft,
+			 faCaretRight,
+			 faPlus);
 
 Vue.use({
-	iconfont: 'faSvg',
-	icons:{
-		'save': 'far fa-book fa-3x',
-		'pfd': 'far fa-drafting-compass fa-3x'
-	}
+	iconfont: 'faSvg',	
   });
 
 Vue.config.productionTip = false

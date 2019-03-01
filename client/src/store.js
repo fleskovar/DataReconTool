@@ -18,6 +18,9 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-
+    AddNode(context, payload)
+    {
+      context.state.canvas.AddNode(payload.n_in, payload.n_out);
+    }
   }
 });
