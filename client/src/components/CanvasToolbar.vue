@@ -2,7 +2,7 @@
 
     <v-toolbar flat dense class="pa-0 ma-0">
                 
-        <v-btn v-on:click="AddNode" flat compact><font-awesome-icon icon="plus" /></v-btn>
+        <v-btn small fab v-on:click="AddNode" flat compact><font-awesome-icon icon="plus" /></v-btn>
 
         <v-divider vertical></v-divider>
         
@@ -14,18 +14,21 @@
 
         <v-divider vertical></v-divider>
         <div>
-            <v-text-field v-model="n_ports_in" type="number" label="Inputs"/>
+            <v-text-field hide-details v-model="n_ports_in" type="number" label="Inputs"/>
         </div>               
         <v-divider vertical></v-divider>
         <div>
-            <v-text-field v-model="n_ports_out" type="number" label="Outputs"/>
+            <v-text-field hide-details v-model="n_ports_out" type="number" label="Outputs"/>
         </div>
 
         <v-divider vertical></v-divider>
 
-        <v-btn flat> <font-awesome-icon icon="search-plus" class="mt-auto"/></v-btn>
-        <v-btn flat> <font-awesome-icon icon="search-minus" class="mt-auto"/></v-btn>
-        <v-btn v-on:click="ResizeNode">Resize</v-btn>
+        <v-btn v-on:click="ResizeNode" flat small class="pa-0 ma-0">Resize</v-btn>
+        <v-item-group class="pa-0 ma-0">
+            <v-btn fab flat small class="transparent"> <font-awesome-icon icon="search-plus" class="mt-auto"/></v-btn>
+            <v-btn fab flat small class="transparent"> <font-awesome-icon icon="search-minus" class="mt-auto"/></v-btn>
+        </v-item-group>
+        
 
     </v-toolbar>
 
