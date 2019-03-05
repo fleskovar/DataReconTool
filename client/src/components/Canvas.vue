@@ -32,15 +32,15 @@
 
 import CanvasToolbar from '../components/CanvasToolbar.vue'
   
-  export default {
-    data: () => ({}),
+export default {
+  data: () => ({}),
 
-    components: {
-      CanvasToolbar
-    },
-    methods:{    
-      
+  components: {
+    CanvasToolbar
+  },
+  methods:{    
+    
 
-  }
-  }
+}
+}
 </script>

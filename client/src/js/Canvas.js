@@ -1,14 +1,17 @@
 import {ModelManager} from './ModelManager'
+//import Vue from 'vue';
 
 class Canvas{
 
-    constructor(canvas){        
+    constructor(canvas, store){
+		this.store = store;        
         this.canvas = canvas;
 		this.graph = null;
 		this.initCanvas(canvas);		
 						
 		this.model_manager = new ModelManager(this.graph);		
-		this.model_manager.BuildDefaultModel(this.graph);				
+		this.model_manager.BuildDefaultModel(this.graph);	
+		
     }
 
     initCanvas(container)
@@ -61,16 +64,62 @@ class Canvas{
 				return false;
 			};
 
-			graph.connectionHandler.addListener(mxEvent.CONNECT, function(sender, evt)
+			//Adding new connection event
+			graph.connectionHandler.addListener(mxEvent.CONNECT, (sender, evt) =>
 			{
+				this.model_manager.AddStream();
 				//TODO: Create library of connection here.	
-			    var edge = evt.getProperty('cell');
-			    var source = graph.getModel().getTerminal(edge, true);
+				
+				var edge = evt.getProperty('cell');	
+				
+				edge.properties = [];
+
+				var mass_flow_rate_obj = {
+					label: 'Test label',
+					mesaured: false,
+					data_tag: '01F001.pnt',
+					units: 'tn/d',
+					value: 0.0,
+					sd: 0.0,
+					reconciled_value: 0.0,
+					fixed: false					
+				};	
+				
+				edge.properties.push(mass_flow_rate_obj);				
+				
+				
+				/*
+				edge.setAttribute('measured', 'false');
+				edge.setAttribute('data_tag', '');
+				edge.setAttribute('mass_flow_rate', '');
+				*/
+				/*
+				var source = graph.getModel().getTerminal(edge, true);
 			   
 			    var style = graph.getCellStyle(edge);
 			    var sourcePortId = style[mxConstants.STYLE_SOURCE_PORT];
-			    var targetPortId = style[mxConstants.STYLE_TARGET_PORT];
+				var targetPortId = style[mxConstants.STYLE_TARGET_PORT];
+				*/
 			 
+			});
+
+			//Adding double click event
+			graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
+				var cell = evt.getProperty('cell');
+				if (cell!=null){
+					if (cell.vertex!=null && cell.vertex==1){
+						//console.log(cell.userData);
+						if (cell.userData && cell.userData.isGroup){	//custom
+							//is group, do nothing
+						}else{
+							//is cell, open cell edit panel    
+							this.OpenCell(cell);
+						}
+					}else if (cell.edge!=null && cell.edge==1){
+						//is edge, open edge edit
+						this.OpenEdge(cell);
+					}
+				}
 			});
 
 			// Enables rubberband selection
@@ -449,6 +498,18 @@ class Canvas{
 			}
 		};
 	} 
+
+	OpenCell(cell)
+	{
+
+	}
+
+	OpenEdge(cell)
+	{
+		//Vue.bus.emit("element-selected", cell);
+		this.store.commit("setSelectedElement", cell, 'edge');
+		//this.store.state.selected_element=cell;
+	}
 	
 	GetModelXML(){
 		var xml = this.model_manager.GetModelXML();

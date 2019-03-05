@@ -1,18 +1,8 @@
 <template>
     <div class='drawing_board'>
          <!-- LEFT TOOL PANEL -->
-        <div id="left_panel" class="side_panel">
-          <div class = "left_panel_menu_1">
-              <div>Panel 1<br><br></div>              
-          </div>
-
-          <div class = "left_panel_menu_2">
-            Panel 2
-            
-            <br>
-          </div>
-        </div> 
-          <Canvas/>        
+         <ElementExplorer class="side_panel"/>        
+         <Canvas/>        
     </div>
 
 </template>
@@ -21,6 +11,7 @@
 <script>
 
   import Canvas from '../components/Canvas.vue'
+  import ElementExplorer from '../components/ElementExplorer.vue'
 
   export default {    
     methods:{
@@ -33,7 +24,8 @@
         }
     },
     components: {
-      Canvas
+      Canvas,
+      ElementExplorer
     },
   }
 </script>

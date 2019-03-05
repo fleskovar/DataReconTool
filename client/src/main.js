@@ -16,6 +16,7 @@ import { faArrowLeft,
 		 faPlus } from '@fortawesome/free-solid-svg-icons'
 import {Canvas} from  '../src/js/Canvas'
 import router from './router'
+//import VueBus from 'vue-bus'
 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon); // Register component globally
@@ -31,6 +32,7 @@ library.add( faArrowLeft,
 Vue.use({
 	iconfont: 'faSvg',	
   });
+//Vue.use(VueBus);
 
 Vue.config.productionTip = false
 
@@ -47,9 +49,9 @@ window.onload = function(e){
 	var container = document.getElementById('canvas');
   	//main(container);
 
-	var c = new Canvas(container);
-	app.$store.commit('setCanvas', c);
-	
+	var canvas = new Canvas(container, app.$store);
+	app.$store.commit('setCanvas', canvas);
+		
 	//c.AddNode(2, 2);
 	//c.AddNode(2, 2);
 	//c.AddNode(1, 0);

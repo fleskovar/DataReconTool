@@ -11,7 +11,8 @@
            />
         </div>
 
-        <router-view class="main"></router-view>        
+        <router-view class="main"></router-view>
+        <input type='file' id='fileInput' v-on:change='OpenModel($event)' hidden>        
                 
         <div id="console" class="console"> Asd</div>
     </div> 
@@ -70,6 +71,7 @@
         element.click();
         document.body.removeChild(element);
       },
+      
       OpenFile: function(){
         var file_obj = document.getElementById('fileInput');
         file_obj.click();

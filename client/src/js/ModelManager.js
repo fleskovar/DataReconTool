@@ -1,13 +1,18 @@
 import {NodeManager} from './NodeManager'
+import {DataManager} from './DataManager'
+import {Stream, Node} from './ReconciliationModel'
 
 class ModelManager{
 
-    constructor(graph){
-        this.graph = graph;
-        this.node_manager = new NodeManager(graph);
-    }
+	constructor(graph){
+			this.graph = graph;
+			this.node_manager = new NodeManager(graph);
+			this.data_manager = new DataManager(graph);
+			this.streams = [];
+			this.nodes = [];
+	}
 
-    BuildDefaultModel(graph)
+	BuildDefaultModel(graph)
 	{		
 		// Gets the default parent for inserting new cells. This
 		// is normally the first child of the root (ie. layer 0).
@@ -15,33 +20,17 @@ class ModelManager{
 		parent.id = "main";
 		this.node_manager.AddNode(0, 1, false, 'Input', true, 300, 100);
 		this.node_manager.AddNode(1, 0, false, 'Output', true, 500, 100);
-    };
-    
-    ReadSingleFile(e)
-	{
-		var file = e.target.files[0];
-		if (!file) {
-		  return;
-		}
-		var reader = new FileReader();
-		reader.onload = function(e) {
-		  var contents = e.target.result;
-		  // Display file content
-		  LoadModel(contents);
-		};
-		reader.readAsText(file);
-    };
-    
-    LoadModel(contents)
-	{
-		let graph = this.graph;
-		var file = contents;
-		//var xmlDoc = mxUtils.load(url).getXml();
-		var xmlDoc = mxUtils.parseXml(file);
-		var node = xmlDoc.documentElement;
-		var dec = new mxCodec(node.ownerDocument);
-		dec.decode(node, graph.getModel());
 	};
+	
+	ReadSingleFile(e)
+	{
+		this.data_manager.ReadSingleFile(e);
+	};
+	
+	LoadModel(content)
+	{
+		this.data_manager.LoadModel(content);
+	}
 	  
 	GetModelXML()
 	{
@@ -56,11 +45,19 @@ class ModelManager{
 	AddNode(in_nodes, out_nodes)
 	{
 		this.node_manager.AddNode(in_nodes, out_nodes);
+		var node = new Node();
+		this.nodes.push(node);
 	}
 
 	ResizeNode(in_nodes, out_nodes)
 	{
 		this.node_manager.ResizeNode(in_nodes, out_nodes);
+	}
+
+	AddStream()
+	{
+		 var stream = new Stream();
+		 this.streams.push(stream);
 	}
 
 }
