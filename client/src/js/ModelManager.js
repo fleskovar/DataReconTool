@@ -18,8 +18,8 @@ class ModelManager{
 		// is normally the first child of the root (ie. layer 0).
 		var parent = graph.getDefaultParent();
 		parent.id = "main";
-		this.node_manager.AddNode(0, 1, false, 'Input', true, 300, 100);
-		this.node_manager.AddNode(1, 0, false, 'Output', true, 500, 100);
+		this.node_manager.AddNode(0, 1, false, 'Input', true, 300, 100, true);
+		this.node_manager.AddNode(1, 0, false, 'Output', true, 500, 100, true);		
 	};
 	
 	ReadSingleFile(e)

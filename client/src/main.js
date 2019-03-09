@@ -13,7 +13,8 @@ import { faArrowLeft,
 		 faSearchPlus,
 		 faCaretLeft,
 		 faCaretRight,
-		 faPlus } from '@fortawesome/free-solid-svg-icons'
+		 faPlus,
+		 faTrash } from '@fortawesome/free-solid-svg-icons'
 import {Canvas} from  '../src/js/Canvas'
 import router from './router'
 //import VueBus from 'vue-bus'
@@ -27,7 +28,8 @@ library.add( faArrowLeft,
 			 faSearchPlus,
 			 faCaretLeft,
 			 faCaretRight,
-			 faPlus);
+			 faPlus,
+			 faTrash);
 
 Vue.use({
 	iconfont: 'faSvg',	

@@ -4,7 +4,7 @@ class NodeManager{
         this.graph = graph;
     };
 
-    AddNode(n_nodes_in, n_nodes_out, deletable=true, name='Node', ignore_graph=false, x=300, y=300){
+    AddNode(n_nodes_in, n_nodes_out, deletable=true, name='Node', ignore_graph=false, x=300, y=300, recon_ignore=false){
 	
 		let graph = this.graph;
 		
@@ -32,7 +32,11 @@ class NodeManager{
 			var v = graph.insertVertex(parent, null, name, x, y, 80, 80, style);
 			v.setConnectable(false);
 			v.setAttribute('node', '1');
+			v.is_node = true;
 			
+			if(recon_ignore)
+				v.recon_ignore=true;
+
 			if(ignore_graph)
 				v.setAttribute('ignore_graph', '1');
 			

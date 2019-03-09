@@ -45,8 +45,8 @@
 }
 
 .side_panel{
-    grid-row: 1;
-    background-color: red;
+    grid-row: 1;    
+    height: 100%;
 }
 
 </style>

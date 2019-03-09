@@ -73,10 +73,12 @@ class Canvas{
 				var edge = evt.getProperty('cell');	
 				
 				edge.properties = [];
+				edge.label = '';
 
 				var mass_flow_rate_obj = {
-					label: 'Test label',
-					mesaured: false,
+					label: 'Flowrate',
+					optional: false,
+					measured: false,
 					data_tag: '01F001.pnt',
 					units: 'tn/d',
 					value: 0.0,
@@ -85,7 +87,36 @@ class Canvas{
 					fixed: false					
 				};	
 				
-				edge.properties.push(mass_flow_rate_obj);				
+				edge.properties.push(mass_flow_rate_obj);
+				
+				var mass_flow_rate_obj = {
+					label: 'Temperature',
+					optional: true,
+					measured: false,
+					data_tag: '01T001.pnt',
+					units: 'C',
+					value: 0.0,
+					sd: 0.0,
+					reconciled_value: 0.0,
+					fixed: false					
+				};	
+				
+				edge.properties.push(mass_flow_rate_obj);
+
+				var mass_flow_rate_obj = {
+					label: 'Mass flow rate',
+					id: 'mfr',
+					optional: true,
+					measured: false,
+					data_tag: '01P001.pnt',
+					units: 'barg',
+					value: 0.0,
+					sd: 0.0,
+					reconciled_value: 0.0,
+					fixed: false					
+				};	
+				
+				edge.properties.push(mass_flow_rate_obj);
 				
 				
 				/*
