@@ -1,6 +1,5 @@
 import xmltodict as xd
 import numpy as np
-from scipy.linalg import qr
 from math import sqrt
 from collections import OrderedDict as odict
 
@@ -23,54 +22,18 @@ class Edge(object):
         self.target_id = target_id
         self.label = label        
         self.type="normal"
-        
 
 def build_model(file_name):
     
     doc = create_xml_dict(file_name) # Transform the xml file into a dictionary
     
-    nodes = extract_nodes(doc) # Find all mass balance nodes and put them in a dictionary
-    
+    nodes = extract_nodes(doc) # Find all mass balance nodes and put them in a dictionary    
     edges = extract_edges(doc)
 
     assign_edges_to_nodes(edges, nodes)
     
-    ak, auk = build_matrices(edges, nodes)
-
-    if auk.shape[1] == 0:
-        # Only known edges
-        A = ak
-    else:
-        A = project_matrix(ak, auk)
-
-    return A, auk, edges, nodes
-
-def project_matrix(ak, auk):
-    q, r, p = qr(auk, pivoting=True)
-    q2 = q[:, -1]
-    return np.dot(q2, ak)
-
-def build_pymc3_model(b, known_edges, flow_dict, sd_dict):
-
-    b1 = b[0:-1]
-    b2 = b[-1]
-
-    labels = [e.label for e in known_edges]
-
-    model = pm.Model()
-
-    with model:
-        f_list = []
-        for i, l in enumerate(labels[0:-1]):        
-            f = pm.Normal(l, mu=flow_dict[l], sd = sd_dict[l])
-            f_list.append(f)
-        f_list = np.array(f_list)
-        
-        balance = pm.Deterministic(labels[-1], np.dot(b1/(-1*b2), f_list))
-        
-        likelihood = pm.Normal('bal', mu=balance, observed=flow_dict[l], sd=sd_dict[l])
-        #start = pm.find_MAP()        
-    return model
+    return edges, nodes
+    
 
 def create_xml_dict(file_name):
     fd = open(file_name)
@@ -135,33 +98,24 @@ def assign_edges_to_nodes(edges, nodes):
         source_id = edge.source_id
         target_id = edge.target_id
 
-        assign_single_edge(edge.id, source_id, nodes, True)
-        assign_single_edge(edge.id, target_id, nodes, False)        
+        assign_single_edge(edge, source_id, nodes, False)
+        assign_single_edge(edge, target_id, nodes, True)        
 
-def assign_single_edge(edge_id, node_id, nodes, is_input):
-    
+def assign_single_edge(edge, node_id, nodes, is_input):
+    edge_id = edge.id
     for n_id in nodes:
         n = nodes[n_id]
         if node_id in n.aliases:
             if is_input:
-                n.inputs.append(edge_id)                
+                n.inputs.append(edge_id)
+                edge.source_id = n_id                
             else:
                 n.outputs.append(edge_id)
+                edge.target_id = n_id
             return
+    if is_input:
+        edge.source_id = None
+    else:
+        edge.target_id = None
 
-def build_matrices(edges, nodes):
 
-    known_edges = [edges[e] for e in edges if edges[e].known is True]
-    unknown_edges = [edges[e] for e in edges if edges[e].known is False]
-
-    ak = np.zeros((len(nodes),len(known_edges)))
-    auk = np.zeros((len(nodes),len(unknown_edges)))
-
-    for i, n in enumerate(nodes):   
-        node = nodes[n]    
-        for j, e in enumerate(known_edges):        
-            if e.id in node.inputs:
-                ak[i][j] = 1
-            elif e.id in node.outputs:
-                ak[i][j] = -1
-    return ak, auk

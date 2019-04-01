@@ -31,6 +31,7 @@ class Canvas{
 			
 			graph.setConnectable(true);
 			graph.setTooltips(true);
+			graph.vertexLabelsMovable = true;
 
 			// Sets the default edge style
 			var style = graph.getStylesheet().getDefaultEdgeStyle();

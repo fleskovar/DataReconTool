@@ -89,7 +89,5 @@
                 this.selectedElement.properties.push(prop);
             }      
         }
-
     }
-
 </script>
