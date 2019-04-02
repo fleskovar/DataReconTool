@@ -38,7 +38,7 @@ class Canvas{
 			graph.panningHandler.isForcePanningEvent = function(me)
 			{
 				// Ctrl+left button makes panning
-				return  ((mxEvent.isControlDown(me.getEvent()) &&
+				return  ((mxEvent.isAltDown(me.getEvent()) &&
 					mxEvent.isLeftMouseButton(me.getEvent())) ||
 					mxEvent.isMiddleMouseButton(me.getEvent()));
 			};
