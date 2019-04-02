@@ -12,14 +12,15 @@
 
 .canvas-container{
     display: grid;
-    grid-template-rows: 50px 1fr;
+    grid-template-rows: 50px minmax(0, 1fr);
     width: 100%;
     height: 100%;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 .canvas{
     grid-row: 2;
+    
 }
 
 .canvas-toolbar{

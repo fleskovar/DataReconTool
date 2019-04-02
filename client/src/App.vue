@@ -109,8 +109,8 @@ html{
    display: grid;
    height: 100vh;
    width: 100vw;
-
-   grid-template-rows: auto 1fr 50px;
+   position: absolute;
+   grid-template-rows: auto minmax(0, 1fr) 30px;
    
 }
 
@@ -120,7 +120,7 @@ html{
 }
 
 .main {    
-    grid-row: 2;   
+    grid-row: 2;       
     height: 100%;
     width: 100%;
     overflow: hidden; 

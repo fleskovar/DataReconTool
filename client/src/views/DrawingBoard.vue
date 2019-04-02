@@ -34,10 +34,8 @@
 .drawing_board{
     display: grid;
     height: 100%;
-    width: 100%;
-
-    grid-template-columns: 30% 1fr;
-    overflow-y: hidden;
+    width: 100%;     
+    grid-template-columns: 30% minmax(0, 1fr);     
 }
 
 .canvas{
@@ -47,6 +45,7 @@
 .side_panel{
     grid-row: 1;    
     height: 100%;
+    overflow-y: scroll;
 }
 
 </style>
