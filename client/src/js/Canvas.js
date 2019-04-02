@@ -31,6 +31,19 @@ class Canvas{
 			
 			graph.setConnectable(true);
 			graph.setTooltips(true);
+			
+			graph.setPanning(true);
+			// Forces panning for middle and right mouse buttons
+			//var panningHandlerIsForcePanningEvent = graph.panningHandler.isForcePanningEvent;
+			graph.panningHandler.isForcePanningEvent = function(me)
+			{
+				// Ctrl+left button makes panning
+				return  ((mxEvent.isControlDown(me.getEvent()) &&
+					mxEvent.isLeftMouseButton(me.getEvent())) ||
+					mxEvent.isMiddleMouseButton(me.getEvent()));
+			};
+			
+			mxEvent.disableContextMenu(container);			
 			graph.vertexLabelsMovable = true;
 
 			// Sets the default edge style
@@ -58,6 +71,16 @@ class Canvas{
 
 				return mxGraph.prototype.getTooltipForCell.apply(this, arguments);
 			};
+
+			mxEvent.addMouseWheelListener(mxUtils.bind(this, function(evt, up)
+			{
+				//if (evt.altKey == true){
+					if(up == true)
+						graph.zoomIn();
+					else graph.zoomOut();
+
+				//}	
+			}));
 
 			// Removes the folding icon and disables any folding
 			graph.isCellFoldable = function(cell)
