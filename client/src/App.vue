@@ -9,6 +9,7 @@
            v-on:open='OpenFile'
            app
            />
+
         </div>
 
         <router-view class="main"></router-view>
@@ -30,17 +31,16 @@
         {name:'File',
          options: ['Open', 'Save']
         },
-        /*
-        {name:'Edit',
-         options: ['Preferences']
+        {name:'Draw',
+         options: []
         },
-        {name:'Data',
-         options: ['Import', 'Edit']
+        {name:'Input Data',
+         options: []
         },
-        {name:'Help',
-         options: ['Help', 'About']
-        }, 
-        */       
+        {name:'Results',
+         options: []
+        },
+             
       ],  
       n_ports_in:  1,
       n_ports_out :1 
@@ -117,6 +117,7 @@ html{
 .header {
     background-color: #2196F3;
     grid-row: 1;
+    z-index: 99;
 }
 
 .main {    
@@ -124,6 +125,7 @@ html{
     height: 100%;
     width: 100%;
     overflow: hidden; 
+    z-index: 2;
 }
 
 

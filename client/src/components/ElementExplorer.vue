@@ -1,6 +1,6 @@
 <template>
 
-    <div class="pa-4" style="overflow-y:scroll">
+    <div class="pa-4" z-index='0'>
         Element inspector
         <br>
         <v-divider/>

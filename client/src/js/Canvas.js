@@ -7,12 +7,20 @@ class Canvas{
 		this.store = store;        
         this.canvas = canvas;
 		this.graph = null;
-		this.initCanvas(canvas);		
+		this.initCanvas(canvas);
+			
 						
 		this.model_manager = new ModelManager(this.graph);		
 		this.model_manager.BuildDefaultModel(this.graph);	
 		
-    }
+	}
+	
+	drawCanvas(container_id){
+		var container = document.getElementById(container_id);
+		this.graph.init(container);
+		this.graph.refresh();
+		mxEvent.disableContextMenu(container);
+	}
 
     initCanvas(container)
     {        

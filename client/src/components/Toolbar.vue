@@ -18,26 +18,24 @@
           @click.stop="primaryDrawer.model = !primaryDrawer.model"
         ></v-toolbar-side-icon>
         -->      
-        <v-menu offset-y v-for="(t_opt, index) in toolbarOptions" :key="index" app>            
-            <v-btn slot="activator" flat small>
-                {{t_opt.name}}
-            </v-btn>            
+        <v-menu>            
+            <v-btn slot="activator" flat small> File </v-btn>
             <v-list>
-                <v-list-tile
-                    v-for="(item, sub_index) in t_opt.options"
-                    :key="sub_index"                
-                >
-                    <v-list-tile v-on:click="$emit(item.toLowerCase())"> {{item}} </v-list-tile>
-                </v-list-tile>
-            </v-list>            
+                <v-list-tile><v-list-tile-title>Open </v-list-tile-title></v-list-tile> 
+                <v-list-tile><v-list-tile-title> Save</v-list-tile-title></v-list-tile>                  
+            </v-list>        
         </v-menu>
+        <v-btn to="/draw" flat small> Draw </v-btn>
+        <v-btn to="/input-data" flat small> Input Data </v-btn>
       </v-toolbar>
+
+      <!--<router-link :to="{ name: 'user', params: { userId: 123 }}">User</router-link>-->
+
     </div>
 </template>
 
 <script>
-  export default {    
-    props: ['toolbarOptions'],
+  export default {
     data: function(){
       return{
         document_name: this.$store.state.document_name

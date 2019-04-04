@@ -27,6 +27,11 @@
       Canvas,
       ElementExplorer
     },
+    mounted () {
+      if(this.$store.state.canvas != null)
+        this.$store.state.canvas.drawCanvas('canvas');
+    },
+ 
   }
 </script>
 

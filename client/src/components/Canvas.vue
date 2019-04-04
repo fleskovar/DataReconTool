@@ -39,9 +39,9 @@ export default {
   components: {
     CanvasToolbar
   },
-  methods:{    
-    
+  methods:{       
 
-}
+  },
+  
 }
 </script>
