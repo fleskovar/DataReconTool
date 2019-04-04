@@ -21,8 +21,8 @@
         <v-menu>            
             <v-btn slot="activator" flat small> File </v-btn>
             <v-list>
-                <v-list-tile><v-list-tile-title>Open </v-list-tile-title></v-list-tile> 
-                <v-list-tile><v-list-tile-title> Save</v-list-tile-title></v-list-tile>                  
+                <v-list-tile v-on:click="$emit('open')">Open</v-list-tile> 
+                <v-list-tile v-on:click="$emit('save')"> Save</v-list-tile>                  
             </v-list>        
         </v-menu>
         <v-btn to="/draw" flat small> Draw </v-btn>
