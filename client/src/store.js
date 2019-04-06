@@ -8,7 +8,8 @@ export const store = new Vuex.Store({
     canvas: null,
     document_name: 'Untitled',
     selected_element: null,
-    selected_element_type: null
+    selected_element_type: null,
+    input_columns: ['A', 'B', 'C']
   },
   mutations:
   {

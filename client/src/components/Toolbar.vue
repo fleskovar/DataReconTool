@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class=".toolbar_div">
       <v-toolbar dense class='pt-0 mt-0'>
          <v-toolbar-items>          
               <v-text-field v-on:change='SetDocumentName($event)'
@@ -18,11 +18,11 @@
           @click.stop="primaryDrawer.model = !primaryDrawer.model"
         ></v-toolbar-side-icon>
         -->      
-        <v-menu>            
+        <v-menu attach=".toolbar_div">            
             <v-btn slot="activator" flat small> File </v-btn>
             <v-list>
                 <v-list-tile v-on:click="$emit('open')">Open</v-list-tile> 
-                <v-list-tile v-on:click="$emit('save')"> Save</v-list-tile>                  
+                <v-list-tile v-on:click="$emit('save')">Save</v-list-tile>                  
             </v-list>        
         </v-menu>
         <v-btn to="/draw" flat small> Draw </v-btn>

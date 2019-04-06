@@ -1,13 +1,16 @@
 <template>
-    <div class='data_table'>
+    <div class='data_table_div'>
+      
     <v-btn>Import</v-btn>
     <v-btn>Export</v-btn>
+    <v-btn v-on:click='AddHeader'>Add Column</v-btn>
+    <v-btn v-on:click='dialog_delete = true'>Delete Column</v-btn>
     <v-data-table
         :headers="headers"
         :items="desserts"
         class="elevation-1"
     >
-
+    <!--
     <template v-slot:items="props">
         <td>{{ props.item.name }}</td>
         <td class="text-xs-right">{{ props.item.calories }}</td>
@@ -16,11 +19,37 @@
         <td class="text-xs-right">{{ props.item.protein }}</td>
         <td class="text-xs-right">{{ props.item.iron }}</td>
       </template>
-    </v-data-table>
+      -->
+    </v-data-table>   
 
+    <!--FIX DROPDOWN ESCAPING CARD-->
+    <v-dialog v-model="dialog_delete" persistent max-width="300px">
+      <v-card flat>
+        <v-card-title>
+          Delete Table Column
+        </v-card-title>
+        
+        <v-card-text class="delete-dialog-card"> 
+          <v-select
+          :items="this.$store.state.input_columns"
+          item-value="text"
+          label="Column"
+          single-line
+          bottom
+          menu-props="auto, overflowY"
+          attach=".delete-dialog-card"
+          ></v-select>               
+          <v-layout justify-end>
+            <v-btn color="red" dark>Delete</v-btn>
+          </v-layout>
+        </v-card-text>
 
-    </div>
-
+        <v-card-actions>
+          <v-btn color="blue" flat v-on:click="dialog_delete=false">Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+</div>
 </template>
 
 <script>
@@ -31,106 +60,53 @@
     },
     data: function(){
         return {
-        headers: [
-            {
-            text: 'Dessert (100g serving)',
-            align: 'left',
-            sortable: false,
-            value: 'name'
-            },
-            { text: 'Calories', value: 'calories' },
-            { text: 'Fat (g)', value: 'fat' },
-            { text: 'Carbs (g)', value: 'carbs' },
-            { text: 'Protein (g)', value: 'protein' },
-            { text: 'Iron (%)', value: 'iron' }
-        ],
-        desserts: [
-            {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%'
-            },
-            {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%'
-            },
-            {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%'
-            },
-            {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%'
-            },
-            {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%'
-            },
-            {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%'
-            },
-            {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%'
-            },
-            {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%'
-            },
-            {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-            },
-            {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-            }
-        ]
+          dialog_delete: false,
+          headers: [
+              {
+              text: 'Dessert (100g serving)',
+              align: 'left',
+              sortable: false,
+              value: 'name'
+              },
+              { text: 'Calories', value: 'calories' },
+              { text: 'Fat (g)', value: 'fat' },
+              { text: 'Carbs (g)', value: 'carbs' },
+              { text: 'Protein (g)', value: 'protein' },
+              { text: 'Iron (%)', value: 'iron' }
+          ],
+          desserts: [
+              {
+              name: 'Frozen Yogurt',
+              calories: 159,
+              fat: 6.0,
+              carbs: 24,
+              protein: 4.0,
+              iron: '1%'
+              }
+          ]
         }  
     },
-    components: {
-      
+    components: {      
     },
+
+    methods:{
+      BuildHeaders: function(){
+        var header_names = this.$store.state.input_columns;
+        this.headers = [];
+        for(var i=0; i<header_names.length; i++){
+          this.headers.push({
+            text: header_names[i],
+            name: header_names[i],
+            sortable: false
+          });
+        }
+      },
+
+      AddHeader: function(){
+        this.$store.state.input_columns.push('Z');
+        this.BuildHeaders();
+      }
+    }
   }
 </script>
 

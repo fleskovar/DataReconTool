@@ -1,21 +1,19 @@
 <template>
 
-      <div id="app" class = "grid-container">
+      <div app class = "grid-container">
 
         <!--TOOLBAR -->
         <div id="header" class="header">          
           <toolbar v-bind:toolbar-options="toolbar_options"
            v-on:save='SaveModel'
            v-on:open='OpenFile'
-           app
            />
-
         </div>
 
         <router-view class="main"></router-view>
-        <input type='file' id='fileInput' v-on:change='OpenModel($event)' hidden>        
-                
+        <input type='file' id='fileInput' v-on:change='OpenModel($event)' hidden>
         <div id="console" class="console"> Asd</div>
+
     </div> 
 </template>
 
@@ -108,8 +106,7 @@ html{
 .grid-container {
    display: grid;
    height: 100vh;
-   width: 100vw;
-   position: absolute;
+   width: 100vw;   
    grid-template-rows: auto minmax(0, 1fr) 30px;
    
 }
