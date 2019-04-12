@@ -1,28 +1,65 @@
 <template>
     <div class='data_table_div'>
-      
-    <v-btn>Import</v-btn>
-    <v-btn>Export</v-btn>
-    <v-btn v-on:click='AddHeader'>Add Column</v-btn>
-    <v-btn v-on:click='dialog_delete = true'>Delete Column</v-btn>
+    
+    <v-btn color="green" dark v-on:click='dialog_add = true'>Add Column</v-btn>
+    <v-btn color="red" dark v-on:click='dialog_delete = true'>Delete Column</v-btn>
     <v-data-table
         :headers="headers"
-        :items="desserts"
+        :items="items"
         class="elevation-1"
+        hide-actions
     >
-    <!--
+
+    <template v-slot:headers="props">
+      <tr>
+        <th>
+         Index
+        </th>
+        <th
+          v-for="header in props.headers"
+          :key="header.text"
+          class="text-sm-left"
+        >          
+          {{ header.text }}
+        </th>
+      </tr>
+    </template>
+    
     <template v-slot:items="props">
-        <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.calories }}</td>
-        <td class="text-xs-right">{{ props.item.fat }}</td>
-        <td class="text-xs-right">{{ props.item.carbs }}</td>
-        <td class="text-xs-right">{{ props.item.protein }}</td>
-        <td class="text-xs-right">{{ props.item.iron }}</td>
+       <td>
+        <v-checkbox
+          primary
+          hide-details
+        ></v-checkbox>
+      </td>
+      
+      <template v-for="(name, index) in header_names">
+        <td class="text-xs-right" v-bind:key="index">
+          <v-edit-dialog
+            :return-value.sync="props.item[name]"
+            lazy
+            @save="save"
+            @cancel="cancel"
+            @open="open"
+            @close="close"
+          > {{ props.item[name] }}
+            <template v-slot:input>
+              <v-text-field
+                v-model="props.item[name]"
+                :rules="[max25chars]"
+                label="Edit"
+                single-line
+                counter
+              ></v-text-field>
+            </template>
+          </v-edit-dialog>          
+        </td>
       </template>
-      -->
+    </template>
+      
     </v-data-table>   
 
-    <!--FIX DROPDOWN ESCAPING CARD-->
+    <!--Delete column dialog-->
     <v-dialog v-model="dialog_delete" persistent max-width="300px">
       <v-card flat>
         <v-card-title>
@@ -31,80 +68,88 @@
         
         <v-card-text class="delete-dialog-card"> 
           <v-select
-          :items="this.$store.state.input_columns"
+          :items="header_names"
           item-value="text"
           label="Column"
           single-line
           bottom
           menu-props="auto, overflowY"
           attach=".delete-dialog-card"
+          v-model="delete_column_name"
           ></v-select>               
           <v-layout justify-end>
-            <v-btn color="red" dark>Delete</v-btn>
+            <v-btn color="red" dark v-on:click="DeleteColumn">Delete</v-btn>
           </v-layout>
         </v-card-text>
 
         <v-card-actions>
-          <v-btn color="blue" flat v-on:click="dialog_delete=false">Close</v-btn>
+          <v-btn color="blue" flat v-on:click="dialog_delete=false" dark>Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!--Add column dialog-->
+    <v-dialog v-model="dialog_add" persistent max-width="300px">
+      <v-card flat>
+        <v-card-title>
+          Add Table Column
+        </v-card-title>
+        
+        <v-card-text> 
+
+          <v-text-field
+            label="Column name" 
+            v-model="add_column_name"           
+          ></v-text-field>
+                      
+          <v-layout justify-end>
+            <v-btn color="green" dark v-on:click="AddColumn"> Add</v-btn>
+          </v-layout>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn color="blue" flat v-on:click="dialog_add=false" dark>Close</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
 </div>
 </template>
 
 <script>
 
-  export default {    
-    methods:{
-        
-    },
+  export default {       
     data: function(){
         return {
           dialog_delete: false,
-          headers: [
-              {
-              text: 'Dessert (100g serving)',
-              align: 'left',
-              sortable: false,
-              value: 'name'
-              },
-              { text: 'Calories', value: 'calories' },
-              { text: 'Fat (g)', value: 'fat' },
-              { text: 'Carbs (g)', value: 'carbs' },
-              { text: 'Protein (g)', value: 'protein' },
-              { text: 'Iron (%)', value: 'iron' }
-          ],
-          desserts: [
-              {
-              name: 'Frozen Yogurt',
-              calories: 159,
-              fat: 6.0,
-              carbs: 24,
-              protein: 4.0,
-              iron: '1%'
-              }
-          ]
+          dialog_add: false,
+          delete_column_name: '',
+          add_column_name: '',                   
+          items: [{A:10.0, B:20.0, C:30.0}]
         }  
+    },
+    computed:
+    {
+      header_names: function(){
+        return this.$store.state.data_input_column_names;
+      },
+      headers: function(){
+        return this.$store.state.data_input_columns;
+      }
+
     },
     components: {      
     },
 
     methods:{
-      BuildHeaders: function(){
-        var header_names = this.$store.state.input_columns;
-        this.headers = [];
-        for(var i=0; i<header_names.length; i++){
-          this.headers.push({
-            text: header_names[i],
-            name: header_names[i],
-            sortable: false
-          });
-        }
+      DeleteColumn: function(){
+        this.$store.dispatch('RemoveColumnInput', this.delete_column_name);
+        this.dialog_delete=false
       },
 
-      AddHeader: function(){
-        this.$store.state.input_columns.push('Z');
-        this.BuildHeaders();
+      AddColumn: function(){
+        this.$store.dispatch('AddColumnInput', this.add_column_name);
+        this.dialog_add=false
       }
     }
   }

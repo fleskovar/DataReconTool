@@ -17,6 +17,8 @@ import { faArrowLeft,
 		 faTrash } from '@fortawesome/free-solid-svg-icons'
 import {Canvas} from  '../src/js/Canvas'
 import router from './router'
+
+import Ace from 'ace-builds/src-noconflict/ace'
 //import VueBus from 'vue-bus'
 
 
@@ -34,6 +36,7 @@ library.add( faArrowLeft,
 Vue.use({
 	iconfont: 'faSvg',	
   });
+Vue.use(Ace);
 //Vue.use(VueBus);
 
 Vue.config.productionTip = false

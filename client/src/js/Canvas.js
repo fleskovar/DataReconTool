@@ -103,44 +103,28 @@ class Canvas{
 				//TODO: Create library of connection here.	
 				
 				var edge = evt.getProperty('cell');	
-				
 				edge.properties = [];
-				edge.label = '';
+
+				//Automatically asigns name to cell. Could be made quicker if last index used is stored
+				var edge_index = 0;
+				var label = 'F'+edge_index;
+				var index = this.store.state.stream_labels.indexOf(label);
+
+				do{
+					++edge_index;
+					label = 'F'+edge_index;
+					index = this.store.state.stream_labels.indexOf(label);
+				}while(index != -1);
+
+				edge.label = label;
+				this.store.state.stream_labels.push(label);
 
 				var mass_flow_rate_obj = {
-					label: 'Flowrate',
-					optional: false,
-					measured: false,
-					data_tag: '01F001.pnt',
-					units: 'tn/d',
-					value: 0.0,
-					sd: 0.0,
-					reconciled_value: 0.0,
-					fixed: false					
-				};	
-				
-				edge.properties.push(mass_flow_rate_obj);
-				
-				var mass_flow_rate_obj = {
-					label: 'Temperature',
+					label: 'Flow_rate',
+					id: 'fr',
 					optional: true,
 					measured: false,
-					data_tag: '01T001.pnt',
-					units: 'C',
-					value: 0.0,
-					sd: 0.0,
-					reconciled_value: 0.0,
-					fixed: false					
-				};	
-				
-				edge.properties.push(mass_flow_rate_obj);
-
-				var mass_flow_rate_obj = {
-					label: 'Mass flow rate',
-					id: 'mfr',
-					optional: true,
-					measured: false,
-					data_tag: '01P001.pnt',
+					data_tag: '',
 					units: 'barg',
 					value: 0.0,
 					sd: 0.0,

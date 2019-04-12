@@ -37,9 +37,11 @@
                         <div>
                             <v-text-field v-model="selectedElement.properties[selected_prop].data_tag" label="Data Tag"/>  
                         </div>                
-                </v-layout>       
+                </v-layout>
+                <!--       
                 <v-text-field v-model="selectedElement.properties[selected_prop].units" label="Units"/>  
-                <v-divider/>     
+                <v-divider/>  
+                -->   
             </div>
         </div>    
         <div v-if="selectedElement==null">
@@ -79,8 +81,7 @@
 					label: 'Property',
 					optional: true,
 					measured: false,
-					data_tag: '',
-					units: '',
+					data_tag: '',					
 					value: 0.0,
 					sd: 0.0,
 					reconciled_value: 0.0,
