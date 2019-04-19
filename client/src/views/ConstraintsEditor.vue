@@ -6,9 +6,9 @@
       </v-layout>
       </v-card>
 
-      <v-card flat>
+      
       <editor editor-id="editorA" :content="contentA" v-on:change-content="changeContentA"/>
-      </v-card>
+      
   </div>
 </template>
 

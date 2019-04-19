@@ -1,5 +1,5 @@
 <template>
-
+      <v-app>
       <div app class = "grid-container">
 
         <!--TOOLBAR -->
@@ -15,6 +15,7 @@
         <div id="console" class="console"> Asd</div>
 
     </div> 
+    </v-app>
 </template>
 
 <script>
@@ -114,15 +115,13 @@ html{
 .header {
     background-color: #2196F3;
     grid-row: 1;
-    z-index: 99;
 }
 
 .main {    
     grid-row: 2;       
     height: 100%;
     width: 100%;
-    overflow: hidden; 
-    z-index: 2;
+    overflow: hidden;
 }
 
 

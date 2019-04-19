@@ -1,6 +1,6 @@
 <template>
 
-    <div class="pa-4" z-index='0'>
+    <div class="pa-4">
         Element inspector
         <br>
         <v-divider/>

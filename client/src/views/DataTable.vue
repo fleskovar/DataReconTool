@@ -73,8 +73,7 @@
           label="Column"
           single-line
           bottom
-          menu-props="auto, overflowY"
-          attach=".delete-dialog-card"
+          menu-props="auto, overflowY"          
           v-model="delete_column_name"
           ></v-select>               
           <v-layout justify-end>
