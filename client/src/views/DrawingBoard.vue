@@ -37,20 +37,19 @@
 
 <style>
 .drawing_board{
-    display: grid;
-    height: 100%;
-    width: 100%;     
-    grid-template-columns: 30% minmax(0, 1fr);     
+  display: grid;     
+  grid-template-columns: 30% minmax(0, 1fr);     
+  min-height: 0;
 }
 
 .canvas{
-    grid-row: 2;
+  grid-row: 2;
 }
 
 .side_panel{
-    grid-row: 1;    
-    height: 100%;
-    overflow-y: scroll;
+  grid-row: 1;
+  min-height: 0;
+  overflow-y: scroll;
 }
 
 </style>

@@ -4,6 +4,7 @@
         Element inspector
         <br>
         <v-divider/>
+        <br>
         <div v-if="selectedElement"> 
             <div :key="selectedElement.id">           
                 <v-text-field v-model="selectedElement.label" label="Stream Label"/>
@@ -26,18 +27,19 @@
                         </v-list-tile>
                     </template>
                 </v-list>
-                
+                <br>
                 <v-divider/>            
-                
+                <br>
                 <v-text-field v-model="selectedElement.properties[selected_prop].label" label="Property Label"/>  
                 
                 <v-layout align-center row>                
                         <v-checkbox v-model="selectedElement.properties[selected_prop].measured" label="Measured"/>
-                        <!--<div v-if="selectedElement.properties[0].measured">-->
-                        <div>
-                            <v-text-field v-model="selectedElement.properties[selected_prop].data_tag" label="Data Tag"/>  
-                        </div>                
+                        <!--<div v-if="selectedElement.properties[0].measured">-->                        
+                        <v-text-field v-model="selectedElement.properties[selected_prop].data_tag" label="Data Tag"/>                                         
                 </v-layout>
+
+                <v-text-field label="Sigma"/>
+                <v-text-field label="Constant"/>
                 <!--       
                 <v-text-field v-model="selectedElement.properties[selected_prop].units" label="Units"/>  
                 <v-divider/>  

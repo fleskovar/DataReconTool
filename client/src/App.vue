@@ -105,28 +105,26 @@ html{
 }
 
 .grid-container {
-   display: grid;
-   height: 100vh;
-   width: 100vw;   
-   grid-template-rows: auto minmax(0, 1fr) 30px;
+  display: grid;
+  height: 100vh;
+  width: 100vw;   
+  grid-template-rows: auto minmax(0, 1fr) 30px;
    
 }
 
 .header {
-    background-color: #2196F3;
-    grid-row: 1;
+  background-color: #2196F3;
+  grid-row: 1;
 }
 
 .main {    
-    grid-row: 2;       
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
+  grid-row: 2;
+  min-height: 0;
 }
 
 
 .console{   
-    grid-row: 3;
-    background-color: #2196F3;
+  grid-row: 3;
+  background-color: #2196F3;
 }
 </style>

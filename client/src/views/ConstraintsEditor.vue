@@ -6,8 +6,19 @@
       </v-layout>
       </v-card>
 
+      <v-container fluid style="height: 100%">
+        <v-layout row fill-height >
+          <v-flex xs6>
+            <editor style="height: 100%" editor-id="editorA" :content="contentA" v-on:change-content="changeContentA"/>          
+          </v-flex>
+          <v-flex xs6>
+            Panel
+          </v-flex>
+
+        </v-layout>
+      </v-container>
+
       
-      <editor editor-id="editorA" :content="contentA" v-on:change-content="changeContentA"/>
       
   </div>
 </template>
