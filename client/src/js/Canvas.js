@@ -116,25 +116,26 @@ class Canvas{
 					index = this.store.state.stream_labels.indexOf(label);
 				}while(index != -1);
 
-				edge.label = label;
+				// edge.label = label;
+				edge.value = label;
 				this.store.state.stream_labels.push(label);
 
 				var mass_flow_rate_obj = {
 					label: 'Flow_rate',
 					id: 'fr',
-					optional: true,
-					measured: false,
-					data_tag: '',
-					units: 'barg',
+					optional: true,					
+					units: '',
+					type: 'unknown',
 					value: 0.0,
+					data_tag: '',
 					sd: 0.0,
 					reconciled_value: 0.0,
 					fixed: false					
 				};	
 				
 				edge.properties.push(mass_flow_rate_obj);
-				
-				
+				this.OpenEdge(edge);
+								
 				/*
 				edge.setAttribute('measured', 'false');
 				edge.setAttribute('data_tag', '');
@@ -151,7 +152,7 @@ class Canvas{
 			});
 
 			//Adding double click event
-			graph.addListener(mxEvent.DOUBLE_CLICK, (sender, evt) => {
+			graph.addListener(mxEvent.CLICK, (sender, evt) => {
 				var cell = evt.getProperty('cell');
 				if (cell!=null){
 					if (cell.vertex!=null && cell.vertex==1){

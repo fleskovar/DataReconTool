@@ -38,7 +38,7 @@
 <style>
 .drawing_board{
   display: grid;     
-  grid-template-columns: 30% minmax(0, 1fr);     
+  grid-template-columns: 31% minmax(0, 1fr);     
   min-height: 0;
 }
 

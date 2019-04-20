@@ -7,7 +7,7 @@
         <br>
         <div v-if="selectedElement"> 
             <div :key="selectedElement.id">           
-                <v-text-field v-model="selectedElement.label" label="Stream Label"/>
+                <v-text-field v-model="selectedElement.value" label="Stream Label"/>
                 <v-divider/>
                 Stream Properties
                 <v-btn small fab flat compact v-on:click="createProperty"><font-awesome-icon icon="plus" /></v-btn>
@@ -32,14 +32,18 @@
                 <br>
                 <v-text-field v-model="selectedElement.properties[selected_prop].label" label="Property Label"/>  
                 
-                <v-layout align-center row>                
-                        <v-checkbox v-model="selectedElement.properties[selected_prop].measured" label="Measured"/>
-                        <!--<div v-if="selectedElement.properties[0].measured">-->                        
-                        <v-text-field v-model="selectedElement.properties[selected_prop].data_tag" label="Data Tag"/>                                         
-                </v-layout>
-
+                <v-radio-group row v-model="selectedElement.properties[selected_prop].type">
+                    <v-radio label="Measured" value="measured"></v-radio>
+                    <v-radio label="Constant" value="constant"></v-radio>
+                    <v-radio label="Unknown" value="unknown"></v-radio>
+                </v-radio-group>
+                
+                <!--<div v-if="selectedElement.properties[0].measured">-->         
+                <div v-show='this.checkSelectedPropType==="measured"'>               
+                <v-text-field v-model="selectedElement.properties[selected_prop].data_tag" label="Data Tag"/>
                 <v-text-field label="Sigma"/>
-                <v-text-field label="Constant"/>
+                </div>
+                <v-text-field v-show='this.checkSelectedPropType==="constant"' label="Value"/>
                 <!--       
                 <v-text-field v-model="selectedElement.properties[selected_prop].units" label="Units"/>  
                 <v-divider/>  
@@ -60,13 +64,17 @@
             return{
                 element: null,
                 element_type: null,
-                selected_prop: 0
+                selected_prop: 0,
+                selected_prop_type: 'measured',
             }
         },
         computed:{
             selectedElement: function(){
                 return this.$store.state.selected_element;
-            }
+            },
+            selectedPropType: function(prop_type){
+                return this.selectedElement.properties[this.selected_prop].type;
+            },
         },
         methods:{  
             selectProperty: function(index)
@@ -90,7 +98,12 @@
 					fixed: false					
                 };
                 this.selectedElement.properties.push(prop);
-            }      
+            },
+            checkSelectedPropType: function(prop_type){
+                var check = this.selectedElement.properties[this.selected_prop].type === prop_type;
+                console.log(check);
+                return check
+            },               
         }
     }
 </script>
