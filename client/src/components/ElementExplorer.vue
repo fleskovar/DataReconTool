@@ -30,20 +30,21 @@
                 <br>
                 <v-divider/>            
                 <br>
-                <v-text-field v-model="selectedElement.properties[selected_prop].label" label="Property Label"/>  
+                <v-text-field v-model="selectedElement.properties[selected_prop].label" label="Property Label" v-on:change='updateComponent()'/>  
                 
-                <v-radio-group row v-model="selectedElement.properties[selected_prop].type">
+                <v-radio-group row v-model="selectedElement.properties[selected_prop].type" v-on:change='updateComponent()'>
                     <v-radio label="Measured" value="measured"></v-radio>
                     <v-radio label="Constant" value="constant"></v-radio>
                     <v-radio label="Unknown" value="unknown"></v-radio>
                 </v-radio-group>
-                
+                               
                 <!--<div v-if="selectedElement.properties[0].measured">-->         
-                <div v-show='this.checkSelectedPropType==="measured"'>               
+                
+                <div v-show='selectedElement.properties[selected_prop].type==="measured"'>               
                 <v-text-field v-model="selectedElement.properties[selected_prop].data_tag" label="Data Tag"/>
                 <v-text-field label="Sigma"/>
                 </div>
-                <v-text-field v-show='this.checkSelectedPropType==="constant"' label="Value"/>
+                <v-text-field v-show='selectedElement.properties[selected_prop].type==="constant"' label="Value"/>
                 <!--       
                 <v-text-field v-model="selectedElement.properties[selected_prop].units" label="Units"/>  
                 <v-divider/>  
@@ -72,18 +73,30 @@
             selectedElement: function(){
                 return this.$store.state.selected_element;
             },
-            selectedPropType: function(prop_type){
-                return this.selectedElement.properties[this.selected_prop].type;
-            },
+            /*selectedPropType:{
+                get(){
+                    return this.selectedElement.properties[this.selected_prop].type;
+                    },
+                set(val){
+                    this.selectedElement.properties[this.selected_prop].type = val;
+                    this.$forceUpdate(); 
+                    console.log('changed!');                   
+                    }
+            },*/
         },
         methods:{  
+            updateComponent: function(){
+                this.$forceUpdate();
+            },
             selectProperty: function(index)
             {
                 this.selected_prop=index;
+                this.$forceUpdate();
             },
             removeProperty: function(index)
             {
                 this.selectedElement.properties.splice(index, 1);
+                this.$forceUpdate();
             },
             createProperty: function()
             {
@@ -98,6 +111,7 @@
 					fixed: false					
                 };
                 this.selectedElement.properties.push(prop);
+                this.$forceUpdate();
             },
             checkSelectedPropType: function(prop_type){
                 var check = this.selectedElement.properties[this.selected_prop].type === prop_type;

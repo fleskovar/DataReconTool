@@ -41,8 +41,6 @@ export const store = new Vuex.Store({
     {
       state.data_input_columns = columns;
     }
-
-
   },
   actions:
   {
