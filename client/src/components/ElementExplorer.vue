@@ -72,20 +72,12 @@
         computed:{
             selectedElement: function(){
                 return this.$store.state.selected_element;
-            },
-            /*selectedPropType:{
-                get(){
-                    return this.selectedElement.properties[this.selected_prop].type;
-                    },
-                set(val){
-                    this.selectedElement.properties[this.selected_prop].type = val;
-                    this.$forceUpdate(); 
-                    console.log('changed!');                   
-                    }
-            },*/
+            },            
         },
         methods:{  
             updateComponent: function(){
+                //TODO: Refactor this so that this component is more reactive. 
+                //The selected item in the store should not be a reference to the object of the mxgraph model.
                 this.$forceUpdate();
             },
             selectProperty: function(index)
