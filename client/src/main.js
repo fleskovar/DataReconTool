@@ -17,6 +17,7 @@ import { faArrowLeft,
 		 faTrash } from '@fortawesome/free-solid-svg-icons'
 import {Canvas} from  '../src/js/Canvas'
 import router from './router'
+import VueSocketIO from 'vue-socket.io'
 
 import Ace from 'ace-builds/src-noconflict/ace'
 //import VueBus from 'vue-bus'
@@ -38,6 +39,13 @@ Vue.use({
   });
 Vue.use(Ace);
 //Vue.use(VueBus);
+
+Vue.use(new VueSocketIO({
+    debug: true,
+    connection: 'http://localhost:5000'
+}))
+
+
 
 Vue.config.productionTip = false
 

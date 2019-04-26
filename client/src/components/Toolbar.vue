@@ -42,6 +42,18 @@
 
 <script>
   export default {
+    sockets: {
+        connect: function () {
+            console.log('socket connected');
+            this.pingServer('');
+        },
+        pong: function (data) {
+            console.log('this method was fired by the socket server.')
+        },
+        pong2: function (data) {
+            console.log('did this again')
+        }
+    },
     data: function(){
       return{
         document_name: this.$store.state.document_name
@@ -50,7 +62,12 @@
     methods:{
       SetDocumentName: function(document_name){
         this.$store.commit('setDocumentName', document_name);
-      }
+      },
+      pingServer: function (data) {
+            // $socket is socket.io-client instance
+            console.log('pinging');
+            this.$socket.emit('ping', data);
+        }
     },
   }
 </script>

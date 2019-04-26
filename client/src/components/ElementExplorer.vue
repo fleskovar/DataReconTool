@@ -66,7 +66,6 @@
                 element: null,
                 element_type: null,
                 selected_prop: 0,
-                selected_prop_type: 'measured',
             }
         },
         computed:{
