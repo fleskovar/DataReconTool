@@ -1,10 +1,13 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO, send, emit
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
+socketio = SocketIO(app )
 
+@app.route('/')
+def root():
+    return app.send_static_file('index.html')
 
 @socketio.on('event')
 def handle_my_custom_event(json):
@@ -22,8 +25,6 @@ def ack():
 def handle_my_custom_event(json):
     print('pinged')
     emit('pong', 'pong', callback=ack)
-
-
 
 if __name__ == '__main__':
     socketio.run(app)
